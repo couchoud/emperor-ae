@@ -1,0 +1,17 @@
+{
+  "name": "redjak",
+  "version": "0.0.0",
+  "main": "js/main.js",
+  "description": "",
+  "repository": "",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-cssmin": "~0.4.1",
+    "grunt-contrib-jshint": "~0.2.0",
+    "grunt-bumpup": "~0.5.2",
+    "grunt-contrib-clean": "~0.4.1",
+    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-contrib-copy": "~0.4.1"
+  },
+  "author": "South River Studios, LLC <dev@southriverstudios.com>"
+}

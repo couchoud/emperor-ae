@@ -1,0 +1,304 @@
+* { 
+    box-sizing:border-box;
+}
+
+html, body {
+    height:100%;
+}
+
+body {
+    background:#1c1b1e;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.icon {
+    font-size:28px;
+    width:44px;
+    height:44px;
+    text-align:center;
+    line-height:44px;
+}
+
+.main {
+    background:#1c1b1e;
+    height:100%;
+    overflow:hidden;
+}
+
+.unstyled {
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+.unstyled li {    
+    display: inline;
+}
+
+.cards{
+    background:#fff;
+    -webkit-perspective: 1200;
+    perspective: 1200;
+    overflow:hidden;
+    position: absolute;
+    top:0;
+    right:0;
+    bottom:44px;
+    left:0;
+}
+
+.card {
+    height:100%;  
+    width:100%;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transition: 0.5s;
+    transition:0.5s;
+    position:absolute;
+    z-index:1;
+}
+.card.flipped {
+    -webkit-transform: rotatey(180deg);
+    transform: rotateY( 180deg );
+}
+.card.tossed {
+    -webkit-transform: translateX(100%) rotateY( -90deg );
+    transform: translateX(100%) rotateY( -90deg );
+}
+.card.card-last {
+    z-index:0;
+}
+
+.face {
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    z-index:2;
+    text-align:center;
+}
+
+.card .front {
+    background:#fff;
+     -webkit-transform: rotatey(180deg);    
+    transform: rotateY( 180deg );   
+    z-index:1;   
+}
+.card .back {
+    background:#343338 url('../img/card_back@2x.jpg') no-repeat center center;
+    background-size:cover;
+}
+.card .content {
+    height:100%;
+    position:relative;
+}
+
+.card h1 {
+    font: 400 3.5em 'Starjedi';
+    display:none;
+    margin:0;
+}
+
+.blitz h1,
+.blitz .blitz-content {
+    display:block;
+}
+
+.blitz .actions {
+    font: 400 2.5em/1.2 'Starjedi';
+    padding:0;
+}
+
+.blitz-content {
+    color: #666;    
+    display:none;
+    padding:20px;
+}
+
+.rebel-icons {
+    background:#ddd;
+}
+
+.rebel-icons ul {
+    font: 400 3.5em 'Starjedi';
+    padding:20px 0;
+}
+
+.rebel-icon-list li {
+    padding: 0px 5px ;
+}
+
+.actions {
+    font:400 3.0em/1.5 'Starjedi';
+    padding-top:40px;
+}
+.actions ul {
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+.actions li {
+    margin:0;
+    padding:0;
+}
+
+.card-footer {
+    border-top:1px solid #ddd;
+    height:44px;
+    line-height:44px;
+    margin:0 5px;
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+.decision-bits {
+    float:left;
+}
+.decision-bits .icon {
+    display:inline-block;
+}
+
+.card-count {
+    float:right;
+    padding-right:10px;
+}
+
+.deck-bottom {
+    background:rgba(0,0,0,.75);
+    position: absolute;
+    width:100%;
+    height:100%;
+}
+.deck-bottom::after {
+    content: "";
+    background:#343338 url('../img/card_back@2x.jpg') no-repeat center center;
+    background-size:cover;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;   
+}
+a.btn-shuffle,
+a.btn-shuffle:hover,
+a.btn-shuffle:visited {
+    background:#d21516;
+    border: 1px solid #343338;
+    color:white;
+    width:150px;
+    height:44px;
+    line-height:44px;
+    margin:-22px 0 0 -50px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    text-align:center;
+    text-decoration:none;
+}
+
+.footer {
+    background: #25292c;
+    border-top:1px solid #4a5057;
+    color:white;
+    height:44px;
+    position:absolute;
+    bottom:0;
+    right:0;
+    left:0;
+}
+.footer li {
+    float:left;
+    display:block;
+}
+.footer li a,
+.footer li a:hover,
+.footer li a:visited {
+    color:white;
+    display:block;
+    height:44px;
+    width:64px;
+    text-align:center;
+}
+.footer li .icon {
+    display:inline-block;
+    line-height:44px;
+}
+
+@media only screen and (min-width: 768px) and (min-height:768px) {
+    body {
+        padding:40px 0;
+    }
+    .main {
+        width:414px;
+        height:736px;
+        position:relative;
+        margin:0 auto;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-height:767px) {
+    .main {
+        width:414px;
+        position:relative;
+        margin:0 auto;
+    }
+}
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) 
+and (orientation : landscape) {
+    .card h1 {
+        font: 400 2.0em 'Starjedi';
+        margin:0;
+    }
+    .rebel-icons ul {
+        font: 400 2.5em 'Starjedi';
+        padding:0;
+    }    
+    .actions {
+        font:400 2.0em/1 'Starjedi';
+        padding-top:60px;
+    }
+    .blitz .actions {
+        font:400 1.25em/1 'Starjedi';
+    }
+    .actions li {
+        display:inline;
+    }
+    .actions li:after {
+        content:'.';
+    }
+}
+
+@media screen
+and (device-aspect-ratio: 2/3) {
+    .rebel-icons ul {
+        font: 400 2.5em 'Starjedi';
+        padding:0;
+    }    
+}
+
+@media screen
+and (device-aspect-ratio: 2/3)
+and (orientation : landscape) {
+    .actions {
+        font:400 1.5em/1 'Starjedi';
+        padding-top:60px;
+    }    
+    .actions li {
+        display:inline;
+    }    
+}
+
+
