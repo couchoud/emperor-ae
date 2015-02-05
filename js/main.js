@@ -30,11 +30,6 @@ define([
 ], function ( app, FastClick ) {
    
     FastClick.attach(document.body);
-    $('.card').not('.card-last').click(function() {
-        $(this).toggleClass('flipped').click(function() {
-                $(this).toggleClass('flipped tossed');
-            });
-    });
 
     var xStart, yStart = 0;
      
@@ -49,7 +44,6 @@ define([
         if((yMovement * 3) > xMovement) {
             e.preventDefault();
         }
-    });    
-
+    });
 });
 

@@ -39,7 +39,30 @@ module.exports = function(grunt) {
                 'release/<%= pkg.version %>/stylesheets/main.css' : 'assets/stylesheets/main.css'
             }
         }
-    },   
+    },
+    generate: {
+      options: {
+        basePath: '../',
+        cache: ['js/app.js', 'css/style.css'],
+        network: ['http://*', 'https://*'],
+        fallback: ['/ /offline.html'],
+        exclude: ['js/jquery.min.js'],
+        preferOnline: true,
+        verbose: true,
+        timestamp: true,
+        hash: true,
+        master: ['index.html'],
+        process: function(path) {
+          return path.substring('build/'.length);
+        }
+      },
+      src: [
+          'build/some_files/*.html',
+          'build/js/*.min.js',
+          'build/css/*.css'
+      ],
+      dest: 'manifest.appcache'
+    }    
     jshint: {
       all: ['Gruntfile.js', 'js/**/*.js'],
       options: {
@@ -69,7 +92,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
-
+  grunt.loadNpmTasks('grunt-manifest');
 
   // precommit task.
   grunt.registerTask('precommit', ['jshint', 'jasmine']);

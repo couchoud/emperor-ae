@@ -2,7 +2,7 @@
     "actions" : [
         {
             "id": 0,
-            "name": "Attack",
+            "name": "Attack"
         },
         {
             "id" : 1,
@@ -16,24 +16,20 @@
     "icons" : [
         {
             "id": 0,
-            "name": "red",
-            "hex": "ff0000"
+            "name": "red"
         },
         {
             "id": 1,
-            "name": "green",
-            "hex": "00ff00"
+            "name": "green"
         },
         {
             "id": 2,
-            "name": "blue",
-            "hex": "0000ff"
+            "name": "blue"
         },
         {
             "id": 3,
-            "name": "gold",
-            "hex": "ffff00"
-        },
+            "name": "gold"
+        }
     ],
     "enum_card_types" : {
         "BLITZ" : 0,

@@ -4,16 +4,31 @@
 
 html, body {
     height:100%;
+    text-rendering: optimizeLegibility;
 }
 
 body {
     background:#1c1b1e;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Roboto-light", sans-serif;
+    font-size;16px;
 }
 
 .clearfix:after {
   content: "";
   display: table;
   clear: both;
+}
+
+.hidden {
+    display:none;
+}
+.unstyled {
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+.unstyled li {    
+    display: inline;
 }
 
 .icon {
@@ -30,17 +45,14 @@ body {
     overflow:hidden;
 }
 
-.unstyled {
-    list-style:none;
-    margin:0;
-    padding:0;
-}
-.unstyled li {    
-    display: inline;
+.status-bar {
+    background:black;
+    display:none;
+    height:20px;
 }
 
-.cards{
-    background:#fff;
+.deck {
+    background:rgba(0,0,0,.75);
     -webkit-perspective: 1200;
     perspective: 1200;
     overflow:hidden;
@@ -50,7 +62,22 @@ body {
     bottom:44px;
     left:0;
 }
-
+.deck::after {
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity:0.5;
+    position: absolute;
+    z-index: -1;   
+}
+.ios-standalone .deck {
+    top:20px;
+}
+.ios-standalone .status {
+    display:block;
+}
 .card {
     height:100%;  
     width:100%;
@@ -62,17 +89,14 @@ body {
     z-index:1;
 }
 .card.flipped {
-    -webkit-transform: rotatey(180deg);
+    -webkit-transform: rotateY(180deg);
     transform: rotateY( 180deg );
+    z-index:2;
 }
 .card.tossed {
-    -webkit-transform: translateX(100%) rotateY( -90deg );
-    transform: translateX(100%) rotateY( -90deg );
+    -webkit-transform: translate(100%, 0) rotateY(-90deg);
+    transform: translate(100%, 0) rotateY(-90deg);
 }
-.card.card-last {
-    z-index:0;
-}
-
 .face {
     position:absolute;
     top:0;
@@ -84,126 +108,224 @@ body {
     z-index:2;
     text-align:center;
 }
-
 .card .front {
     background:#fff;
      -webkit-transform: rotatey(180deg);    
     transform: rotateY( 180deg );   
     z-index:1;   
 }
-.card .back {
-    background:#343338 url('../img/card_back@2x.jpg') no-repeat center center;
-    background-size:cover;
+.card .back,
+.deck-bottom,
+.deck::after {
+    background-color:#343238;
+    background: #343238 url('../img/empire_logo@2x.png') no-repeat center center;
+    background: url('../img/empire_logo@2x.png') no-repeat center center, -webkit-linear-gradient(#62606a, #343238);
+    background: url('../img/empire_logo@2x.png') no-repeat center center, linear-gradient(#62606a, #343238);
+    background-size:contain;
 }
+
+.card-header {
+    background:rgba(255,255,255,.5);    
+    border-bottom:2px solid #fff;
+    border-bottom-left-radius:10px;
+    border-bottom-right-radius:10px;
+    -webkit-box-shadow: 0px 2px 2px 0px rgba(50, 50, 50, 0.05);
+    -moz-box-shadow:    0px 2px 2px 0px rgba(50, 50, 50, 0.05);
+    box-shadow:         0px 2px 2px 0px rgba(50, 50, 50, 0.05);
+    font: 400 3.5em 'Starjedi';
+    height:90px;
+    overflow:hidden;
+}
+.card-header:after {
+    content: "";
+    background:transparent url('../img/linen.png');
+    opacity:1.0;
+    position: absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    z-index: -1;      
+}
+
+.rebel-icon-red {
+    color:#9a0f0f;
+    background: -webkit-linear-gradient(#e24b4b, #9a0f0f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.rebel-icon-green {
+    color:#2f9e10;
+    background: -webkit-linear-gradient(#6ce24c, #2f9e10);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;    
+}
+.rebel-icon-blue {
+    color:#1241b8;
+    background: -webkit-linear-gradient(#4c77e2, #1241b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+}
+.rebel-icon-gold {
+    color:#b8b212;
+    background: -webkit-linear-gradient(#e2dc4c, #b8b212);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;     
+}
+
+
 .card .content {
+    background: rgb(231,226,227); /* Old browsers */
+    background: linear-gradient(to right, rgba(220,211,198,0.5) 1%,rgba(231,226,227,0.5) 15%,rgba(231,226,227,0.5) 85%,rgba(220,211,198,0.5) 100%);
+    position:absolute;
+    top:90px;
+    right:0;
+    bottom:44px;
+    left:0;
+    width:100%;
+    padding:0 10px;
+}
+.card .content:after {
+    content: "";
+    background:transparent url('../img/linen.png');
+    opacity:1.0;
+    position: absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    z-index: -1;      
+}
+
+.card .content .wrap {
+    display:table;
+    width:100%;
     height:100%;
-    position:relative;
 }
 
 .card h1 {
     font: 400 3.5em 'Starjedi';
+    letter-spacing: 2px;
     display:none;
-    margin:0;
 }
 
 .blitz h1,
-.blitz .blitz-content {
-    display:block;
-}
-
-.blitz .actions {
-    font: 400 2.5em/1.2 'Starjedi';
-    padding:0;
+.blitz .blitz-content,
+.blitz .actions  {
+    display:table-row;
 }
 
 .blitz-content {
     color: #666;    
     display:none;
-    padding:20px;
+    font-size:0.875em;
+    padding:10px;
 }
-
-.rebel-icons {
-    background:#ddd;
+.blitz-content > div {
+    display:table-cell;
+    vertical-align:middle;
 }
-
-.rebel-icons ul {
-    font: 400 3.5em 'Starjedi';
-    padding:20px 0;
-}
-
-.rebel-icon-list li {
-    padding: 0px 5px ;
+.blitz-content p {
+    margin:0 0 5px;
+    padding:0;
 }
 
 .actions {
     font:400 3.0em/1.5 'Starjedi';
-    padding-top:40px;
+    display: table-row;
 }
 .actions ul {
+    display: table-cell;
     list-style:none;
     margin:0;
     padding:0;
+    vertical-align: middle;    
 }
 .actions li {
     margin:0;
     padding:0;
 }
 
+.blitz .actions {
+    font: 400 2em/1.25 'Starjedi';
+    padding:0;
+}
+
+.blitz .actions ul {
+    vertical-align:top;
+}
+
 .card-footer {
-    border-top:1px solid #ddd;
+    background:#d7d2d9;
+    border-top:1px solid #eee;
     height:44px;
     line-height:44px;
-    margin:0 5px;
     position:absolute;
     bottom:0;
     left:0;
     right:0;
+    z-index:1;
 }
-
+.card-footer:after {
+    content: "";
+    background:transparent url('../img/linen.png');
+    width:100%;
+    height:100%;
+    opacity:1.0;
+    position: absolute;
+    z-index: -1;      
+}
+.card-footer div {
+    background:rgba(255,255,255,.5);
+    border:1px solid #eee;
+    border-radius:5px;
+    margin:2px 0;
+    padding:0 10px;
+    height:40px;
+    line-height:40px    
+}
 .decision-bits {
     float:left;
 }
 .decision-bits .icon {
     display:inline-block;
 }
-
 .card-count {
+    color:#5b5858;
     float:right;
-    padding-right:10px;
+    font-weight:800px;
 }
 
 .deck-bottom {
-    background:rgba(0,0,0,.75);
     position: absolute;
     width:100%;
     height:100%;
 }
-.deck-bottom::after {
-    content: "";
-    background:#343338 url('../img/card_back@2x.jpg') no-repeat center center;
-    background-size:cover;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    z-index: -1;   
-}
-a.btn-shuffle,
-a.btn-shuffle:hover,
-a.btn-shuffle:visited {
+.deck-bottom a.btn-shuffle,
+.deck-bottom a.btn-shuffle:hover,
+.deck-bottom a.btn-shuffle:visited {
     background:#d21516;
     border: 1px solid #343338;
+    -webkit-border-radius:5px;
+    border-radius:5px;
     color:white;
     width:150px;
     height:44px;
     line-height:44px;
-    margin:-22px 0 0 -50px;
+    margin:-22px 0 0 -75px;
+    outline:none;
     position:absolute;
     top:50%;
     left:50%;
     text-align:center;
     text-decoration:none;
+    visibility:hidden;
+}
+.deck.empty .deck-bottom {
+    background:transparent;
+}
+.deck.empty .deck-bottom a {
+    visibility:visible;
 }
 
 .footer {
@@ -234,71 +356,110 @@ a.btn-shuffle:visited {
     line-height:44px;
 }
 
-@media only screen and (min-width: 768px) and (min-height:768px) {
+@media (min-width: 768px){
     body {
-        padding:40px 0;
+        padding:20px 0;
     }
     .main {
         width:414px;
         height:736px;
-        position:relative;
-        margin:0 auto;
+        position:absolute;
+        top:50%;
+        left:50%;
+        margin:-368px 0 0 -207px;
     }
-}
-
-@media only screen and (min-width: 768px) and (max-height:767px) {
-    .main {
-        width:414px;
-        position:relative;
-        margin:0 auto;
-    }
-}
-
-@media only screen 
-and (min-device-width : 320px) 
-and (max-device-width : 568px) 
-and (orientation : landscape) {
-    .card h1 {
-        font: 400 2.0em 'Starjedi';
-        margin:0;
-    }
-    .rebel-icons ul {
-        font: 400 2.5em 'Starjedi';
-        padding:0;
-    }    
     .actions {
-        font:400 2.0em/1 'Starjedi';
-        padding-top:60px;
+        font:400 3.5em/1.5 'Starjedi';
+    }
+    .blitz .actions {
+        font:400 3.0em/1.25 'Starjedi';
+    }
+    .blitz h1 {
+        font:400 4.0em 'Starjedi';
+    }
+}
+
+@media (min-width: 480px) { 
+    .card h1 {
+        font: 400 2.5em 'Starjedi';
+    }
+    .actions {
+        font:400 1.75em/1 'Starjedi';
     }
     .blitz .actions {
         font:400 1.25em/1 'Starjedi';
-    }
-    .actions li {
-        display:inline;
-    }
-    .actions li:after {
-        content:'.';
-    }
-}
-
-@media screen
-and (device-aspect-ratio: 2/3) {
-    .rebel-icons ul {
-        font: 400 2.5em 'Starjedi';
-        padding:0;
     }    
 }
 
-@media screen
-and (device-aspect-ratio: 2/3)
-and (orientation : landscape) {
+@media (min-width: 550px) { 
+    .card h1 {
+        font: 400 3em 'Starjedi';
+    }
     .actions {
-        font:400 1.5em/1 'Starjedi';
-        padding-top:60px;
-    }    
-    .actions li {
-        display:inline;
+        font:400 2.0em/1 'Starjedi';
+    }
+    .blitz .actions {
+        font:400 2.0em/1 'Starjedi';
     }    
 }
 
+@media (min-width: 640px) {
+    .card h1 {
+        font: 400 3em 'Starjedi';
+    }
+    .actions {
+        font:400 2.5em/1 'Starjedi';
+    }
+    .blitz .actions {
+        font:400 2.0em/1 'Starjedi';
+    }
+}
 
+/*
+
+@media screen and (max-device-width: 480px) {
+    @media screen and (max-width: 400px) { 
+
+    }
+    @media screen and (min-width: 321px) {
+        .card h1 {
+            font: 400 2.5em 'Starjedi';
+        }
+        .actions {
+            font:400 2.25em/1 'Starjedi';
+        }
+        .blitz .actions {
+            font:400 1.25em/1 'Starjedi';
+        }
+    }
+}
+
+@media only screen and (max-device-width: 568px) {
+    @media screen and (min-width: 321px) { 
+        .card h1 {
+            font: 400 3em 'Starjedi';
+        }
+        .actions {
+            font:400 2.0em/1 'Starjedi';
+        }
+        .blitz .actions {
+            font:400 2.0em/1 'Starjedi';
+        }
+    }
+}
+
+@media only screen and (max-device-width: 667px) {
+    @media screen and (min-width: 376px) { 
+        .card h1 {
+            font: 400 3em 'Starjedi';
+        }
+        .actions {
+            font:400 2.0em/1 'Starjedi';
+        }
+        .blitz .actions {
+            font:400 2.0em/1 'Starjedi';
+        }
+    }
+}
+
+*/
