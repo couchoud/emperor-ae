@@ -10,7 +10,7 @@ html, body {
 body {
     background:#1c1b1e;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Roboto-light", sans-serif;
-    font-size;16px;
+    font-size:16px;
 }
 
 .clearfix:after {
@@ -231,7 +231,7 @@ body {
 }
 
 .actions {
-    font:400 3.0em/1.5 'Starjedi';
+    font:400 2.0em/1.5 'Starjedi';
     display: table-row;
 }
 .actions ul {
@@ -356,30 +356,23 @@ body {
     line-height:44px;
 }
 
-@media (min-width: 768px){
-    body {
-        padding:20px 0;
+@media (min-width: 320px) and (orientation:landscape) {
+    .card-header {
+        height:70px;
+        font-size:3em;
     }
-    .main {
-        width:414px;
-        height:736px;
-        position:absolute;
-        top:50%;
-        left:50%;
-        margin:-368px 0 0 -207px;
+    .card .content {
+        top:70px;
     }
-    .actions {
-        font:400 3.5em/1.5 'Starjedi';
+    .actions li {
+        display:inline;
     }
-    .blitz .actions {
-        font:400 3.0em/1.25 'Starjedi';
-    }
-    .blitz h1 {
-        font:400 4.0em 'Starjedi';
+    .actions li:after {
+        content:'.';
     }
 }
 
-@media (min-width: 480px) { 
+@media (min-width: 480px) {    
     .card h1 {
         font: 400 2.5em 'Starjedi';
     }
@@ -388,78 +381,111 @@ body {
     }
     .blitz .actions {
         font:400 1.25em/1 'Starjedi';
-    }    
+    }
 }
 
 @media (min-width: 550px) { 
     .card h1 {
-        font: 400 3em 'Starjedi';
+        font: 400 2.75em 'Starjedi';
     }
     .actions {
         font:400 2.0em/1 'Starjedi';
     }
     .blitz .actions {
-        font:400 2.0em/1 'Starjedi';
+        font:400 1.5em/1 'Starjedi';
     }    
 }
 
 @media (min-width: 640px) {
     .card h1 {
-        font: 400 3em 'Starjedi';
+        font: 400 3.5em 'Starjedi';
     }
     .actions {
-        font:400 2.5em/1 'Starjedi';
+        font:400 3.0em/1.25 'Starjedi';
     }
     .blitz .actions {
-        font:400 2.0em/1 'Starjedi';
+        font:400 2.5em/1.25 'Starjedi';
+    }
+    .blitz-content {
+        font-size:1em;
     }
 }
 
-/*
-
-@media screen and (max-device-width: 480px) {
-    @media screen and (max-width: 400px) { 
-
+@media (min-width: 768px){
+    .main {
+        width:414px;
+        max-height:736px;
+        position:relative;
+        margin:0 auto;
     }
-    @media screen and (min-width: 321px) {
-        .card h1 {
-            font: 400 2.5em 'Starjedi';
-        }
-        .actions {
-            font:400 2.25em/1 'Starjedi';
-        }
-        .blitz .actions {
-            font:400 1.25em/1 'Starjedi';
-        }
+    .actions {
+        font:400 3.5em/1.5 'Starjedi';
     }
-}
-
-@media only screen and (max-device-width: 568px) {
-    @media screen and (min-width: 321px) { 
-        .card h1 {
-            font: 400 3em 'Starjedi';
-        }
-        .actions {
-            font:400 2.0em/1 'Starjedi';
-        }
-        .blitz .actions {
-            font:400 2.0em/1 'Starjedi';
-        }
+    .blitz .actions {
+        font:400 3.0em/1.25 'Starjedi';
+    }
+    .blitz-content {
+        font-size:1em;
     }
 }
 
-@media only screen and (max-device-width: 667px) {
-    @media screen and (min-width: 376px) { 
-        .card h1 {
-            font: 400 3em 'Starjedi';
-        }
-        .actions {
-            font:400 2.0em/1 'Starjedi';
-        }
-        .blitz .actions {
-            font:400 2.0em/1 'Starjedi';
-        }
+@media (min-height: 768px){
+    body {
+        padding:20px 0;
+    }
+    .main {
+        width:414px;
+        max-height:736px;
+        position:relative;
+        margin:0 auto;
     }
 }
 
-*/
+/* iphone 5 */
+@media (min-width:320px) 
+and (max-width : 568px) 
+and (orientation:portrait) {
+    .actions {
+        font:400 3em/1.5 'Starjedi';
+    }
+}
+/* iphone 6 */
+@media (min-width:375px) 
+and (max-width : 667px) 
+and (orientation:portrait) {
+    .card h1 {
+        font: 400 4em 'Starjedi';
+    }
+    .blitz .actions {
+        font:400 3.0em/1.25 'Starjedi';
+    }    
+    .actions {
+        font:400 3em/1.5 'Starjedi';
+    }
+}
+/* ipads */
+@media(min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) {
+    .main {
+        position:relative;
+        margin:0 auto;
+        top:0;
+        left:0;
+    }
+}
+/* nexus 7 */
+@media (min-device-width : 601px) 
+and (max-device-width : 880px)
+and (orientation : landscape ) {
+    .card h1 {
+        font: 400 3em 'Starjedi';
+    }   
+    .actions {
+        font:400 3em/1.5 'Starjedi';
+    }
+    .blitz .actions {
+        font:400 1.5em/ 'Starjedi';
+    }    
+}
+
