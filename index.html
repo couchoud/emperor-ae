@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">     
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">     
            
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="format-detection" content="telephone=no">        
@@ -24,18 +24,29 @@
     </head>
     <body>
         <div class="main wrapper clearfix">
-            <div class="status-bar"></div>
+            <div class="notification hidden">Shuffling</div>
+            <div class="menu">
+                <h1><span class="clearfix">RedJak's</span>Automated Emperor</h1>
+                <a href="#" class="btn btn-start">Start</a>
+                <cite class="version">v1.0.4(0)</cite>          
+            </div>
+            <div class="difficulty hidden">                
+                <h1>How many Blitz cards?</h1>
+                <ul class="unstyled">
+                    <li><a href="#" class="btn btn-amt" data-amt="3">3</a></li>
+                    <li><a href="#" class="btn btn-amt" data-amt="4">4</a></li>
+                    <li><a href="#" class="btn btn-amt" data-amt="5">5</a></li>
+                    <li><a href="#" class="btn btn-amt" data-amt="6">6</a></li>
+                    <li><a href="#" class="btn btn-amt" data-amt="7">7</a></li>
+                    <li><a href="#" class="btn btn-amt" data-amt="8">8</a></li>
+                </ul>
+            </div>
             <div class="deck">
+                <a href="#" class="btn btn-menu"><i class="icon icon-settings"></i></a>
                 <div class="deck-bottom">
-                    <a href="#" class="btn-shuffle"><i class="icon-reload"></i> Shuffle</a>
+                    <a href="#" class="btn btn-shuffle"><i class="icon-reload"></i> Shuffle</a>
                 </div>
             </div>
-            <div class="footer">
-                <ul class="unstyled">
-                    <li><a href="#"><i class="icon icon-settings"></i></a></li>
-                    <li><a href="#"><i class="icon icon-help"></i></a></li>
-                </ul>
-            </div>           
         </div> <!-- #main -->
 
         <script data-main="js/main" src="bower_components/requirejs/require.js"></script>

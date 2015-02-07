@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>            
-        <div class="card-footer clearfix">   
+        <div class="card-footer clearfix">
             <div class="decision-bits">
             <i class="icon icon-bit-<%= card.bit ? 'true' : 'false' %>"></i>
             </div>

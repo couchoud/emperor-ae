@@ -7,6 +7,10 @@ html, body {
     text-rendering: optimizeLegibility;
 }
 
+html {
+    -webkit-text-size-adjust: 100%;    
+}
+
 body {
     background:#1c1b1e;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Roboto-light", sans-serif;
@@ -33,10 +37,31 @@ body {
 
 .icon {
     font-size:28px;
-    width:44px;
-    height:44px;
+    width:40px;
+    height:40px;
     text-align:center;
+    line-height:40px;
+}
+
+a.btn,
+a.btn:hover,
+a.btn:visited {
+    background:#d21516;
+    border: 1px solid #343338;
+    -webkit-border-radius:3px;
+    border-radius:3px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
+    box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);    
+    color:white;
+    display:inline-block;
+    font-size:1.25em;
+    width:150px;
+    height:44px;
     line-height:44px;
+    outline:none;
+    text-align:center;
+    text-decoration:none;   
 }
 
 .main {
@@ -45,10 +70,93 @@ body {
     overflow:hidden;
 }
 
+.notification {
+    background: #000;
+    background: rgba(0, 0, 0, 0.75);
+    -webkit-border-radius: 12px;
+    border-radius: 12px;
+    color: #FFF;
+    line-height: 88px;
+    position: absolute;
+    width: 150px;
+    height: 88px;
+    z-index: 9999;
+    top: 50%;
+    left: 50%;
+    margin-top: -66px;
+    margin-left: -75px;
+    text-align: center;
+}
+
+
 .status-bar {
     background:black;
     display:none;
     height:20px;
+}
+
+.menu {
+    background:rgba(0,0,0,.75);
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+    padding:10px 0;
+    position:absolute;
+    z-index:1;
+    text-align:center;
+}
+
+.menu h1 {
+    color:white;
+    font: 400 2.5em/1.25 'Starjedi';
+    margin:0;
+    padding:0;
+}
+
+.menu h1 span {
+    color:#9a0f0f;
+    font: 600 .375em/1 "HelveticaNeue-Light", "Helvetica Neue Light", "Roboto-light", sans-serif;
+    text-transform:uppercase;
+}
+
+.menu cite {
+    color: #808080;
+    position: absolute;
+    font-size: .75em;
+    bottom: 3px;
+    display: block;
+    left: 0;
+    right: 0;
+}
+
+.difficulty {
+    background:rgba(0,0,0,.75);
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+    position:absolute;
+    z-index:1;
+    text-align:center;
+}
+
+.difficulty h1 {
+    color:white;
+    font: 400 2.5em/1.25 'Starjedi';
+    margin:0;
+    padding:0;
+}
+
+.difficulty ul {
+    padding:10px 80px;
+}
+
+.difficulty .btn,
+.difficulty .btn:hover,
+.difficulty .btn:visited {
+    margin:10px;
+    width:44px;
 }
 
 .deck {
@@ -59,7 +167,7 @@ body {
     position: absolute;
     top:0;
     right:0;
-    bottom:44px;
+    bottom:0;
     left:0;
 }
 .deck::after {
@@ -72,12 +180,32 @@ body {
     position: absolute;
     z-index: -1;   
 }
-.ios-standalone .deck {
-    top:20px;
+.deck .btn-menu,
+.deck .btn-menu:hover,
+.deck .btn-menu:visited {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;     
+    background:rgba(0,0,0,.25);
+    -webkit-border-radius:0;
+    -moz-border-radius:0;
+    border-radius:0;
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -moz-border-radius-topright: 5px;
+    -moz-border-radius-topleft: 5px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;    
+    border:none;
+    color:rgba(255,255,255,.5);
+    height:40px;
+    width:40px;
+    position:absolute;
+    z-index:10;
+    bottom:0;
+    right:2px;
 }
-.ios-standalone .status {
-    display:block;
-}
+
 .card {
     height:100%;  
     width:100%;
@@ -279,20 +407,18 @@ body {
     background:rgba(255,255,255,.5);
     border:1px solid #eee;
     border-radius:5px;
-    margin:2px 0;
+    float:left;
+    margin:2px 5px 0 0;
     padding:0 10px;
     height:40px;
     line-height:40px    
 }
-.decision-bits {
-    float:left;
-}
+
 .decision-bits .icon {
     display:inline-block;
 }
 .card-count {
     color:#5b5858;
-    float:right;
     font-weight:800px;
 }
 
@@ -304,22 +430,11 @@ body {
 .deck-bottom a.btn-shuffle,
 .deck-bottom a.btn-shuffle:hover,
 .deck-bottom a.btn-shuffle:visited {
-    background:#d21516;
-    border: 1px solid #343338;
-    -webkit-border-radius:5px;
-    border-radius:5px;
-    color:white;
-    width:150px;
-    height:44px;
-    line-height:44px;
-    margin:-22px 0 0 -75px;
-    outline:none;
     position:absolute;
     top:50%;
-    left:50%;
-    text-align:center;
-    text-decoration:none;
+    left:50%;    
     visibility:hidden;
+    margin:-22px 0 0 -75px;
 }
 .deck.empty .deck-bottom {
     background:transparent;
@@ -328,35 +443,8 @@ body {
     visibility:visible;
 }
 
-.footer {
-    background: #25292c;
-    border-top:1px solid #4a5057;
-    color:white;
-    height:44px;
-    position:absolute;
-    bottom:0;
-    right:0;
-    left:0;
-}
-.footer li {
-    float:left;
-    display:block;
-}
-.footer li a,
-.footer li a:hover,
-.footer li a:visited {
-    color:white;
-    display:block;
-    height:44px;
-    width:64px;
-    text-align:center;
-}
-.footer li .icon {
-    display:inline-block;
-    line-height:44px;
-}
-
-@media (min-width: 320px) and (orientation:landscape) {
+@media screen
+and (min-aspect-ratio: 13/9){
     .card-header {
         height:70px;
         font-size:3em;
@@ -367,12 +455,17 @@ body {
     .actions li {
         display:inline;
     }
-    .actions li:after {
-        content:'.';
+    .actions li:not(:last-child):after {
+        color:#ccc;
+        content:' -';
     }
 }
 
-@media (min-width: 480px) {    
+@media (min-width: 480px) {
+    .menu h1 {
+        font-size:2.25em;
+        margin-bottom:20px;
+    }   
     .card h1 {
         font: 400 2.5em 'Starjedi';
     }
@@ -381,10 +474,10 @@ body {
     }
     .blitz .actions {
         font:400 1.25em/1 'Starjedi';
-    }
+    }   
 }
 
-@media (min-width: 550px) { 
+@media (min-width: 550px) {
     .card h1 {
         font: 400 2.75em 'Starjedi';
     }
@@ -418,6 +511,15 @@ body {
         position:relative;
         margin:0 auto;
     }
+    .actions li:not(:last-child):after {
+        content:'';
+    }    
+    .btn-start {
+        position:absolute;
+        top:50%;
+        left:50%;
+        margin:-22px 0 0 -75px;
+    }    
     .actions {
         font:400 3.5em/1.5 'Starjedi';
     }
@@ -439,20 +541,41 @@ body {
         position:relative;
         margin:0 auto;
     }
+    .btn-start {
+        position:absolute;
+        top:50%;
+        left:50%;
+        margin:-22px 0 0 -75px;
+    }     
 }
 
 /* iphone 5 */
 @media (min-width:320px) 
 and (max-width : 568px) 
 and (orientation:portrait) {
+    .menu h1 {
+        font-size:2.5em;
+    }
+    .btn-start {
+        position:absolute;
+        top:50%;
+        left:50%;
+        margin:-22px 0 0 -75px;
+    }    
     .actions {
         font:400 3em/1.5 'Starjedi';
+    }
+    .blitz .actions {
+        font:400 2.5em/1.5 'Starjedi';
     }
 }
 /* iphone 6 */
 @media (min-width:375px) 
 and (max-width : 667px) 
 and (orientation:portrait) {
+    .menu h1 {
+        font-size:3.0em;
+    }    
     .card h1 {
         font: 400 4em 'Starjedi';
     }
@@ -482,7 +605,7 @@ and (orientation : landscape ) {
         font: 400 3em 'Starjedi';
     }   
     .actions {
-        font:400 3em/1.5 'Starjedi';
+        font:400 2.5em/1.5 'Starjedi';
     }
     .blitz .actions {
         font:400 1.5em/ 'Starjedi';
