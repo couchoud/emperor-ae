@@ -64,3 +64,4 @@
 .icon-reload:before { content: '\e804'; } /* '' */
 .icon-bit-true:before { content: '\e803'; } /* '' */
 .icon-bit-false:before { content: '\e801'; } /* '' */
+.icon-close:before { content: '\e805'; }

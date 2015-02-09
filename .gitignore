@@ -30,3 +30,5 @@ Session.vim
 
 # Bower
 /bower_components
+
+/release

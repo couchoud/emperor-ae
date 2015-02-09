@@ -25,10 +25,43 @@ define([
         _cards,
         _blitz_cards,
         _action_cards,
-        _shuffled_cards;
+        _shuffled_deck,
+        _deck,
+        _current_card;
 
-    var _current_card_idx = 0,
-        _blitz_card_amt = null;
+    var _blitz_card_amt = null;
+
+    var _$main = $('.main'),
+        _$menu = $('.menu'),
+        _$difficulty = $('.difficulty'),
+        _$deck = $('.deck'),
+        _$notification = $('.notification');
+
+    var _$btnStart = $('.btn-start'),
+        _$btnBlitzAmt = $('.btn-amt'),
+        _$btnPauseMenu = $('.btn-pause-menu'),
+        _$btnPauseMenuClose = $('.btn-close'),
+        _$btnShuffle = $('.btn-shuffle');
+
+    var _transEvent;
+
+    function _whichTransitionEvent(){
+        var t,
+            el = document.createElement('fakeelement'),
+            transitions = {
+              'transition':'transitionend',
+              'OTransition':'oTransitionEnd',
+              'MozTransition':'transitionend',
+              'WebkitTransition':'webkitTransitionEnd',
+              'msTransitionEnd' : 'MSTransitionEnd'
+            };
+
+        for(t in transitions){
+            if( el.style[t] !== undefined ){
+                return transitions[t];
+            }
+        }
+    }        
 
     function _parse( data ) {
         _actions = data.actions;
@@ -44,71 +77,113 @@ define([
             if(card.type === _card_types.BLITZ) {
                 _blitz_cards.push(card);
             }
-            _blitz_cards
+
             card.actions = _.map(action_ids, function( action_id ) { return _.findWhere( _actions, { id : action_id }); });
             card.icons = _.map(icon_ids, function ( icon_id ) { return _.findWhere(_icons, { id : icon_id }); }); 
         });
 
         _action_cards = _.difference(_cards, _blitz_cards);
+    }
 
-        console.debug('######## ACTION CARDS ########');
-        console.debug(_action_cards);
-        console.debug('######## BLITZ CARDS ########');
-        console.debug(_blitz_cards);
+    function _shuffleIntoDeck ( card_obj ) {
+        var insertion_point = Math.floor(Math.random()*_shuffled_deck.length);
+        _shuffled_deck.splice(insertion_point, 0, card_obj);
     }
     
-    function _renderCard( card ) {
-        var obj = { card : card,  total_cards : _shuffled_cards.length, card_number: _current_card_idx + 1 },
-            card = $(card_tpl(obj)).prependTo('.deck');
-
-        card.one('click', function() {
-            $(this).toggleClass('flipped')
-                   .one('click', function() {
-                       $(this).one('webkitTransitionEnd transitionend', function () {
-                                    _current_card_idx++;
-                                   _renderCard(_shuffled_cards[_current_card_idx]);
-                                   $(this).remove();
-                              })
-                              .toggleClass('tossed');
-                    });
+    function _flipCard( card ) {
+        card = $(card);
+        card.one(_transEvent, function() {
+                $(this).one('click', function() {
+                    if(_current_card.type === _card_types.BLITZ) {
+                        var that = $(this),
+                            prompt = $(this).find('.blitz-prompt');
+                        $(this).find('.btn-yes').one('click', function() { 
+                            _shuffleIntoDeck(_current_card);
+                            prompt.toggleClass('hidden');
+                            _tossCard(that);
+                        });
+                        $(this).find('.btn-no').one('click', function() { 
+                            prompt.toggleClass('hidden');
+                            _tossCard(that);
+                        });
+                        prompt.toggleClass('hidden');
+                    }
+                    else {
+                        _tossCard(this);
+                    }
                 });
+            })
+            .toggleClass('flipped');
 
-        if((_current_card_idx + 1) === _shuffled_cards.length) {
-            $('.deck').addClass('empty');
+    }
+
+    function _tossCard ( card ) {
+        card = $(card);
+        card.one(_transEvent, function () {
+                _removeCard(card);
+                _nextCard();
+              })
+              .toggleClass('tossed');       
+    }
+
+    function _removeCard( card ) {
+        card = $(card);
+        card.off().remove();
+    }
+
+    function _renderCard( card ) {
+        var obj = { card : card,  total_cards : _deck.length, card_number: _deck.length - _shuffled_deck.length },
+            card_el = $(card_tpl(obj)).prependTo('.deck');
+
+        card_el.one('click', function() {
+                _$notification.addClass('hidden');
+                _flipCard( this );
+            });
+    }
+
+    function _nextCard() {
+        if(_shuffled_deck.length) {
+            _current_card = _shuffled_deck.shift();
+           _renderCard(_current_card);
         }
-
+        else {
+            _current_card = null;
+            _$deck.addClass('empty');
+        }
     }
 
     function _deal() {
-        _current_card_idx = 0;
-        var _deck = _action_cards.concat(_.sample(_blitz_cards, _blitz_card_amt)); 
-        _shuffled_cards = _.shuffle(_deck);
-        _renderCard(_shuffled_cards[_current_card_idx]);
-        
-        console.debug('######## SHUFFLED CARDS ########');
-        console.debug(_shuffled_cards);
-        console.debug('length: ' + _shuffled_cards.length);
-            
+        _deck = _action_cards.concat(_.sample(_blitz_cards, _blitz_card_amt));
+        _shuffled_deck = _.shuffle(_deck);
+        _$notification.removeClass('hidden');
+        _nextCard(); 
     }
 
     function _init () {
+        
+        _transEvent = _whichTransitionEvent();
 
-        $('.btn-start').click(function() {
-            $('.menu').addClass('hidden');
-            $('.difficulty').removeClass('hidden');
+        _$btnStart.click(function() {
+            _$menu.addClass('hidden');
+            _$difficulty.removeClass('hidden');
         });
 
-        $('.btn-amt').click(function() {
+        _$btnBlitzAmt.click(function() {
             _blitz_card_amt = parseInt($(this).data('amt'),10);
-            $('.difficulty').addClass('hidden');
+            _$difficulty.addClass('hidden');
             _deal();
         });
 
-        $('.btn-shuffle').click(function() {
-            $('.deck').removeClass('empty');
+        _$btnShuffle.click(function() {
+            _$deck.removeClass('empty');
             _deal();
         });
-
+        _$btnPauseMenu.click(function() {
+            _$main.addClass('paused');
+        });
+        _$btnPauseMenuClose.click(function() {
+            _$main.removeClass('paused');
+        });
         _getData(_parse);
     }
     

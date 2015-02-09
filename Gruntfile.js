@@ -12,19 +12,24 @@ module.exports = function(grunt) {
         main : {
             files : [
                 { src : 'data/*', dest: 'release/<%= pkg.version %>/'},
+                { src : 'platform/index.html', dest: 'release/<%= pkg.version %>/index.html'},
                 { expand: true, 
                   flatten: true, 
-                  src: ['css/fonts/*'], 
-                  dest: 'release/<%= pkg.version %>/css/fonts', filter: 'isFile'}
+                  src: ['fonts/*'],
+                  dest: 'release/<%= pkg.version %>/fonts', filter: 'isFile'},
+                { expand: true, 
+                  flatten: true, 
+                  src: ['img/*'],
+                  dest: 'release/<%= pkg.version %>/img', filter: 'isFile'}
             ]
         }
     },
     requirejs: {
       compile: {
         options: {
-          baseUrl: "src",
+          baseUrl: "js",
           include : ['../bower_components/requirejs/require.js'],
-          mainConfigFile: "src/main.js",
+          mainConfigFile: "js/main.js",
           name : "main",
           out: "release/<%= pkg.version %>/js/main.js"
         }
@@ -36,33 +41,26 @@ module.exports = function(grunt) {
         },        
         compress: {
             files: {
-                'release/<%= pkg.version %>/stylesheets/main.css' : 'assets/stylesheets/main.css'
+                'release/<%= pkg.version %>/css/main.css' : 'css/*.css'
             }
         }
-    },
-    generate: {
-      options: {
-        basePath: '../',
-        cache: ['js/app.js', 'css/style.css'],
-        network: ['http://*', 'https://*'],
-        fallback: ['/ /offline.html'],
-        exclude: ['js/jquery.min.js'],
-        preferOnline: true,
-        verbose: true,
-        timestamp: true,
-        hash: true,
-        master: ['index.html'],
-        process: function(path) {
-          return path.substring('build/'.length);
+    },  
+    manifest: {
+        generate: {
+          options: {
+            basePath: './',
+            master: ['index.html']
+          },
+          src: [
+              'release/<%= pkg.version %>/js/*.js',
+              'release/<%= pkg.version %>/css/*.css',
+              'release/<%= pkg.version %>/fonts/*.*',
+              'release/<%= pkg.version %>/img/*.*',
+              'release/<%= pkg.version %>/data/*.json'
+          ],
+          dest: 'release/<%= pkg.version %>/redjak.appcache'
         }
-      },
-      src: [
-          'build/some_files/*.html',
-          'build/js/*.min.js',
-          'build/css/*.css'
-      ],
-      dest: 'manifest.appcache'
-    }    
+    },
     jshint: {
       all: ['Gruntfile.js', 'js/**/*.js'],
       options: {
@@ -98,7 +96,7 @@ module.exports = function(grunt) {
   grunt.registerTask('precommit', ['jshint', 'jasmine']);
 
   // default release task sequence
-  var default_sequence = ['clean', 'jshint', 'requirejs', 'cssmin', 'copy:main'];
+  var default_sequence = ['clean', 'jshint', 'requirejs', 'cssmin', 'copy:main', 'manifest'];
 
   // Default task.
   grunt.registerTask('default', default_sequence);

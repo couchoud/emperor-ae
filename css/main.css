@@ -23,6 +23,14 @@ body {
   clear: both;
 }
 
+.fullscreen {
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+}
+
 .hidden {
     display:none;
 }
@@ -30,9 +38,6 @@ body {
     list-style:none;
     margin:0;
     padding:0;
-}
-.unstyled li {    
-    display: inline;
 }
 
 .icon {
@@ -49,10 +54,7 @@ a.btn:visited {
     background:#d21516;
     border: 1px solid #343338;
     -webkit-border-radius:3px;
-    border-radius:3px;
-    -webkit-box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
-    -moz-box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
-    box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);    
+    border-radius:3px;   
     color:white;
     display:inline-block;
     font-size:1.25em;
@@ -69,57 +71,48 @@ a.btn:visited {
     height:100%;
     overflow:hidden;
 }
+.main.paused .pause-menu {
+    top:0;
+    bottom:0;
+}
+.main.paused .btn-pause-menu {
+    display:none;
+}
 
 .notification {
     background: #000;
-    background: rgba(0, 0, 0, 0.75);
+    background: rgba(0, 0, 0, 0.5);
     -webkit-border-radius: 12px;
     border-radius: 12px;
     color: #FFF;
-    line-height: 88px;
     position: absolute;
-    width: 150px;
-    height: 88px;
+    height:44px;
+    line-height:44px;
     z-index: 9999;
-    top: 50%;
-    left: 50%;
-    margin-top: -66px;
-    margin-left: -75px;
+    top: 20px;
+    right: 20px;
+    left : 20px;
     text-align: center;
-}
-
-
-.status-bar {
-    background:black;
-    display:none;
-    height:20px;
+    pointer-events: none;
 }
 
 .menu {
     background:rgba(0,0,0,.75);
-    top:0;
-    right:0;
-    left:0;
-    bottom:0;
     padding:10px 0;
-    position:absolute;
-    z-index:1;
     text-align:center;
+    z-index:1;
 }
-
 .menu h1 {
     color:white;
     font: 400 2.5em/1.25 'Starjedi';
     margin:0;
     padding:0;
 }
-
 .menu h1 span {
     color:#9a0f0f;
     font: 600 .375em/1 "HelveticaNeue-Light", "Helvetica Neue Light", "Roboto-light", sans-serif;
     text-transform:uppercase;
 }
-
 .menu cite {
     color: #808080;
     position: absolute;
@@ -132,26 +125,23 @@ a.btn:visited {
 
 .difficulty {
     background:rgba(0,0,0,.75);
-    top:0;
-    right:0;
-    left:0;
-    bottom:0;
-    position:absolute;
-    z-index:1;
+    padding:40px 20px;
     text-align:center;
+    z-index:1;
 }
-
 .difficulty h1 {
     color:white;
-    font: 400 2.5em/1.25 'Starjedi';
+    font: 400 2.0em/1.25 'Starjedi';
     margin:0;
     padding:0;
 }
-
 .difficulty ul {
-    padding:10px 80px;
+    margin:20px 0;
+    padding:10px 60px;
 }
-
+.difficulty li {
+    display:inline;
+}
 .difficulty .btn,
 .difficulty .btn:hover,
 .difficulty .btn:visited {
@@ -159,16 +149,59 @@ a.btn:visited {
     width:44px;
 }
 
-.deck {
-    background:rgba(0,0,0,.75);
-    -webkit-perspective: 1200;
-    perspective: 1200;
-    overflow:hidden;
+.pause-menu {
+    background: rgb(231,226,227); /* Old browsers */
+    background: linear-gradient(to right, rgba(220,211,198,0.5) 1%,rgba(231,226,227,0.5) 15%,rgba(231,226,227,0.5) 85%,rgba(220,211,198,0.5) 100%);
+    z-index:9999;
+    text-align:center;
+    -webkit-transition: 0.5s;
+    transition:0.5s;
+    top:100%;
+    bottom:-100%;
+}
+.pause-menu:after {
+    content: "";
+    background:transparent url('../img/linen.png');
+    opacity:1.0;
     position: absolute;
     top:0;
     right:0;
     bottom:0;
     left:0;
+    z-index: -1;      
+}
+.pause-menu li {
+    margin:20px 0;
+}
+.pause-menu a.btn-close,
+.pause-menu a.btn-close:hover,
+.pause-menu a.btn-close:visited {
+    background: rgba(0, 0, 0, 0.5);
+    color: #FFF;
+    text-decoration:none;
+    display:block;
+    width:44px;
+    height:44px;
+    line-height:44px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.pause-menu .wrap {
+    display:table;
+    height:100%;
+    width:100%;
+}
+.pause-menu ul {
+    display:table-cell;
+    vertical-align:middle;
+}
+
+.deck {
+    background:rgba(0,0,0,.75);
+    -webkit-perspective: 1200;
+    perspective: 1200;
+    overflow:hidden;
 }
 .deck::after {
     content: "";
@@ -180,9 +213,9 @@ a.btn:visited {
     position: absolute;
     z-index: -1;   
 }
-.deck .btn-menu,
-.deck .btn-menu:hover,
-.deck .btn-menu:visited {
+.deck .btn-pause-menu,
+.deck .btn-pause-menu:hover,
+.deck .btn-pause-menu:visited {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;     
@@ -195,7 +228,7 @@ a.btn:visited {
     -moz-border-radius-topright: 5px;
     -moz-border-radius-topleft: 5px;
     border-top-right-radius: 5px;
-    border-top-left-radius: 5px;    
+    border-top-left-radius: 5px;
     border:none;
     color:rgba(255,255,255,.5);
     height:40px;
@@ -204,6 +237,7 @@ a.btn:visited {
     z-index:10;
     bottom:0;
     right:2px;
+    z-index:3;
 }
 
 .card {
@@ -226,11 +260,6 @@ a.btn:visited {
     transform: translate(100%, 0) rotateY(-90deg);
 }
 .face {
-    position:absolute;
-    top:0;
-    right:0;
-    bottom:0;
-    left:0;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     z-index:2;
@@ -276,6 +305,9 @@ a.btn:visited {
     z-index: -1;      
 }
 
+.rebel-icons li {
+    display:inline;
+}
 .rebel-icon-red {
     color:#9a0f0f;
     background: -webkit-linear-gradient(#e24b4b, #9a0f0f);
@@ -305,13 +337,12 @@ a.btn:visited {
 .card .content {
     background: rgb(231,226,227); /* Old browsers */
     background: linear-gradient(to right, rgba(220,211,198,0.5) 1%,rgba(231,226,227,0.5) 15%,rgba(231,226,227,0.5) 85%,rgba(220,211,198,0.5) 100%);
-    position:absolute;
     top:90px;
     right:0;
     bottom:44px;
     left:0;
-    width:100%;
     padding:0 10px;
+    position:absolute;
 }
 .card .content:after {
     content: "";
@@ -342,6 +373,50 @@ a.btn:visited {
 .blitz .actions  {
     display:table-row;
 }
+.blitz-prompt {
+    background:rgba(0,0,0,.5);
+    color:white;
+    z-index:2;
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+}
+.blitz-prompt p {
+    padding:0 20px;
+}
+.blitz-prompt .outer {
+    width:100%;
+    height:100%;
+    position:relative;
+}
+.blitz-prompt .inner {
+    background:rgba(255,255,255,1);
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
+    box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);     
+    border-radius:5px;
+    border:1px solid #ddd;
+    color:black;
+    padding:20px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:220px;
+    height:150px;
+    margin-top:-75px;
+    margin-left:-110px;
+}
+.blitz-prompt a.btn,
+.blitz-prompt a.btn:hover,
+.blitz-prompt a.btn:visited {
+    width:60px;
+}
+
+.blitz-prompt .btn-yes {
+    margin-right:25px;
+}
 
 .blitz-content {
     color: #666;    
@@ -357,6 +432,7 @@ a.btn:visited {
     margin:0 0 5px;
     padding:0;
 }
+
 
 .actions {
     font:400 2.0em/1.5 'Starjedi';
@@ -445,6 +521,12 @@ a.btn:visited {
 
 @media screen
 and (min-aspect-ratio: 13/9){
+    .difficulty {
+        padding:40px 10px;
+    }
+    .difficulty ul {
+        padding:10px 70px;
+    }
     .card-header {
         height:70px;
         font-size:3em;
@@ -521,10 +603,10 @@ and (min-aspect-ratio: 13/9){
         margin:-22px 0 0 -75px;
     }    
     .actions {
-        font:400 3.5em/1.5 'Starjedi';
+        font:400 4.0em/1.75 'Starjedi';
     }
     .blitz .actions {
-        font:400 3.0em/1.25 'Starjedi';
+        font:400 3.5em/1.25 'Starjedi';
     }
     .blitz-content {
         font-size:1em;
@@ -566,7 +648,7 @@ and (orientation:portrait) {
         font:400 3em/1.5 'Starjedi';
     }
     .blitz .actions {
-        font:400 2.5em/1.5 'Starjedi';
+        font:400 2.5em/1.25 'Starjedi';
     }
 }
 /* iphone 6 */

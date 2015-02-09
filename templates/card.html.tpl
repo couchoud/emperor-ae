@@ -1,5 +1,14 @@
-<div class="card<%= card.type === 0 ? ' blitz' : '' %>">
-    <div class="face front">
+<div class="fullscreen card<%= card.type === 0 ? ' blitz' : '' %>">
+    <div class="fullscreen face front">
+        <div class="blitz-prompt hidden">
+            <div class="outer">
+                <div class="inner">
+                    <p>Did you use the decision bit?</p>
+                    <a href="#" class="btn btn-yes">Yes</a>
+                    <a href="#" class="btn btn-no">No</a>
+                </div>
+            </div>
+        </div>   
         <div class="card-header">
             <ul class="unstyled rebel-icons">
                 <% _.each(card.icons, function( icon ) { %>
@@ -7,7 +16,7 @@
                 <% }); %>
             </ul>
         </div>
-        <div class="content">
+        <div class="content"> 
             <div class="wrap">
                 <h1><em>blitz!</em></h1>
                 <div class="actions">
@@ -32,6 +41,6 @@
             <div class="card-count"><%= card_number %>/<%= total_cards %></div>
         </div> 
     </div>
-    <div class="face back"></div>
+    <div class="fullscreen face back"></div>
 </div>
 
