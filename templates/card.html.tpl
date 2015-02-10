@@ -1,14 +1,5 @@
 <div class="fullscreen card<%= card.type === 0 ? ' blitz' : '' %>">
-    <div class="fullscreen face front">
-        <div class="blitz-prompt hidden">
-            <div class="outer">
-                <div class="inner">
-                    <p>Did you use the decision bit?</p>
-                    <a href="#" class="btn btn-yes">Yes</a>
-                    <a href="#" class="btn btn-no">No</a>
-                </div>
-            </div>
-        </div>   
+    <div class="fullscreen face front">  
         <div class="card-header">
             <ul class="unstyled rebel-icons">
                 <% _.each(card.icons, function( icon ) { %>

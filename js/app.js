@@ -18,6 +18,8 @@ define([
             callback && callback(_data);
         }
     }
+
+    var _store_id = 'redjack';
     
     var _actions,
         _icons,
@@ -35,6 +37,7 @@ define([
         _$menu = $('.menu'),
         _$difficulty = $('.difficulty'),
         _$deck = $('.deck'),
+        _$prompt = $('.prompt'),
         _$notification = $('.notification');
 
     var _$btnStart = $('.btn-start'),
@@ -89,24 +92,42 @@ define([
         var insertion_point = Math.floor(Math.random()*_shuffled_deck.length);
         _shuffled_deck.splice(insertion_point, 0, card_obj);
     }
+
+    function _showPrompt(text, yesHandler, noHandler) {
+
+        _$prompt.find('p').html(text);
+
+        _$prompt.find('.btn-yes')
+                .off()
+                .one('click', function() {
+                    yesHandler && yesHandler();
+                    _$prompt.toggleClass('hidden');
+                });
+        _$prompt.find('.btn-no')
+                .off()
+                .one('click', function() { 
+                    noHandler && noHandler();
+                    _$prompt.toggleClass('hidden');
+                });
+        
+        _$prompt.toggleClass('hidden');
+    }
     
     function _flipCard( card ) {
         card = $(card);
         card.one(_transEvent, function() {
                 $(this).one('click', function() {
                     if(_current_card.type === _card_types.BLITZ) {
-                        var that = $(this),
-                            prompt = $(this).find('.blitz-prompt');
-                        $(this).find('.btn-yes').one('click', function() { 
-                            _shuffleIntoDeck(_current_card);
-                            prompt.toggleClass('hidden');
-                            _tossCard(that);
-                        });
-                        $(this).find('.btn-no').one('click', function() { 
-                            prompt.toggleClass('hidden');
-                            _tossCard(that);
-                        });
-                        prompt.toggleClass('hidden');
+
+                        var that = $(this);
+                        _showPrompt("Did you reference the decision bit?",
+                                    function() { 
+                                        _shuffleIntoDeck(_current_card);
+                                        _tossCard(that);
+                                    },
+                                    function() {
+                                        _tossCard(that);
+                                    });
                     }
                     else {
                         _tossCard(this);
@@ -159,6 +180,13 @@ define([
         _nextCard(); 
     }
 
+    function _restart() {
+        $('.card').off().remove();
+        _$notification.addClass('hidden');
+        _$menu.addClass('hidden');
+        _$main.removeClass('paused');
+    }
+
     function _init () {
         
         _transEvent = _whichTransitionEvent();
@@ -184,19 +212,21 @@ define([
         _$btnPauseMenuClose.click(function() {
             _$main.removeClass('paused');
         });
+        
+        $('.btn-quit').click(function() {
+                _showPrompt("Are you sure you want to quit?",
+                            function() {
+                                _restart();
+                            });
+            });
+
+
         _getData(_parse);
     }
     
     _init();
 
     return {
-        restart : function() {
-        },
-        destroy : function() {
-            if(_xhr) {
-                _xhr.abort();
-                _xhr = null;
-            }            
-        }
+        version : ''
     };
 });
