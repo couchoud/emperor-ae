@@ -183,7 +183,7 @@ define([
     function _restart() {
         $('.card').off().remove();
         _$notification.addClass('hidden');
-        _$menu.addClass('hidden');
+        _$menu.removeClass('hidden');
         _$main.removeClass('paused');
     }
 
