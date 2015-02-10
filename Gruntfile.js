@@ -12,6 +12,7 @@ module.exports = function(grunt) {
         main : {
             files : [
                 { src : 'data/*', dest: 'release/<%= pkg.version %>/'},
+                { src : 'favicon.ico', dest: 'release/<%= pkg.version %>/'},
                 { src : 'platform/index.html', dest: 'release/<%= pkg.version %>/index.html'},
                 { expand: true, 
                   flatten: true, 
