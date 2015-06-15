@@ -30,5 +30,6 @@ Session.vim
 
 # Bower
 /bower_components
+/node_modules
 
 /release
