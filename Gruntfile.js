@@ -47,10 +47,10 @@ module.exports = function(grunt) {
         }
     },  
     manifest: {
-        generate: {
+      generate : {
           options: {
             basePath: './',
-            master: ['index.html']
+            process : function(path) { return path.substring('build/'.length); }
           },
           src: [
               'release/<%= pkg.version %>/js/*.js',
@@ -60,7 +60,7 @@ module.exports = function(grunt) {
               'release/<%= pkg.version %>/data/*.json'
           ],
           dest: 'release/<%= pkg.version %>/redjak.appcache'
-        }
+      }
     },
     jshint: {
       all: ['Gruntfile.js', 'js/**/*.js'],
@@ -93,16 +93,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-manifest');
 
-  // precommit task.
-  grunt.registerTask('precommit', ['jshint', 'jasmine']);
-
   // default release task sequence
   var default_sequence = ['clean', 'jshint', 'requirejs', 'cssmin', 'copy:main', 'manifest'];
 
   // Default task.
   grunt.registerTask('default', default_sequence);
-  
-  // release task
-  grunt.registerTask('release', default_sequence.concat(['bumpup']));
 
 };
